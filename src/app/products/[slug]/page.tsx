@@ -14,17 +14,44 @@ export async function generateStaticParams() {
     return posts?.map(({ slug }) => ({ slug })) || [];
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
     const supabase = createClient();
-    const { data: post } = await supabase.from('post').select('meta_title, meta_description, keywords, canonical_url').eq('slug', slug).single();
+    const { data: post } = await supabase
+        .from('post')
+        .select('title, meta_title, meta_description, keywords, canonical_url')
+        .eq('slug', slug)
+        .eq('company_id', process.env.NEXT_PUBLIC_COMPANY_ID!)
+        .single();
+
+    if (!post) {
+        return {
+            title: 'Product Not Found | Metal Ministry Inc.',
+        };
+    }
+
+    const title = post.meta_title || `${post.title} | Metal Ministry Inc.`;
+    const description = post.meta_description || `Premium quality ${post.title} from Metal Ministry Inc. Global exporter of stainless steel, nickel alloys, and duplex steel products.`;
+    const url = `https://metalministry.in/products/${slug}`;
 
     return {
-        title: post?.meta_title || 'Metal Ministry Inc.',
-        description: post?.meta_description || '',
-        keywords: post?.keywords || '',
+        title,
+        description,
+        keywords: post.keywords,
         alternates: {
-            canonical: post?.canonical_url || `https://metalministry.in/products/${slug}`
+            canonical: post.canonical_url || url,
+        },
+        openGraph: {
+            title,
+            description,
+            url,
+            type: 'article',
+            siteName: 'Metal Ministry Inc.',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
         }
     };
 }

@@ -179,25 +179,37 @@ export default function Home() {
 
             {/* Other Products */}
             {PRODUCTS.map((product, idx) => (
-              <div key={idx} className="group relative rounded-xl overflow-hidden bg-gray-100 dark:bg-slate-800 aspect-[4/3] shadow-md hover:shadow-2xl transition-all duration-500">
-                <Image
-                  src={product.image}
-                  alt={product.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent opacity-60 group-hover:opacity-95 transition-opacity duration-300" />
+              <div key={idx} className="group relative rounded-xl overflow-hidden bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-500 aspect-[4/5]">
 
-                <div className="absolute bottom-0 left-0 w-full p-6 translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-blue-300 transition-colors">{product.title}</h3>
-                  <p className="text-gray-300 text-xs mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75 line-clamp-1">
+                {/* Image Container */}
+                <div className="absolute inset-0 h-full w-full overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[10%] group-hover:grayscale-0"
+                  />
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                </div>
+
+                {/* Content Overlay */}
+                <div className="absolute inset-0 p-6 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <div className="w-10 h-1 bg-blue-500 mb-4 rounded-full w-0 group-hover:w-10 transition-all duration-500 delay-100" />
+
+                  <h3 className="text-xl font-bold text-white mb-2 leading-tight drop-shadow-md">
+                    {product.title}
+                  </h3>
+
+                  <p className="text-gray-300 text-sm mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200 line-clamp-2">
                     {product.desc}
                   </p>
+
                   <Link
                     href={product.link}
-                    className="inline-flex items-center text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 hover:underline"
+                    className="inline-flex items-center justify-center w-full bg-white/10 backdrop-blur-md border border-white/20 text-white py-3 rounded-lg font-semibold text-sm hover:bg-white hover:text-blue-900 transition-all duration-300 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 delay-300"
                   >
-                    View Details <ArrowRight size={14} className="ml-1" />
+                    View Details
                   </Link>
                 </div>
               </div>
@@ -270,6 +282,29 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Metal Ministry Inc.",
+            "url": "https://metalministry.in",
+            "logo": "https://metalministry.in/images/logo1.png",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-9892171042",
+              "contactType": "sales",
+              "areaServed": "Global"
+            },
+            "sameAs": [
+              "https://www.facebook.com/metalministry",
+              "https://www.linkedin.com/company/metalministry"
+            ]
+          })
+        }}
+      />
+    </div >
   );
 }

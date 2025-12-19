@@ -16,8 +16,24 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Metal Ministry Inc.",
-  description: "Leading Manufacturer & Exporter of Ferrous & Non Ferrous Metals",
+  metadataBase: new URL('https://metalministry.in'),
+  title: {
+    default: "Metal Ministry Inc. | Certified Manufacturer & Exporter",
+    template: "%s | Metal Ministry Inc."
+  },
+  description: "ISO 9001:2015 Certified Manufacturer & Exporter of Stainless Steel Pipes, Fittings, Flanges, and High Nickel Alloys. Global Shipping Available.",
+  keywords: ["Stainless Steel Pipes", "Pipe Fittings", "Flanges", "Nickel Alloys", "Metal Manufacturer India", "Metal Exporter"],
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://metalministry.in',
+    title: "Metal Ministry Inc.",
+    description: "Your trusted partner for premium metal products. Certified Manufacturer & Exporter.",
+    siteName: "Metal Ministry Inc.",
+  },
+  twitter: {
+    card: 'summary_large_image',
+  }
 };
 
 export default function RootLayout({
